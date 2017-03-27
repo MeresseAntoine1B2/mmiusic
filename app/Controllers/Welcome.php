@@ -10,6 +10,8 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 
+use App\Models\Playlist;
+use Nova\Support\Facades\Auth;
 use View;
 
 
@@ -27,9 +29,20 @@ class Welcome extends Controller
         $message = __('Hello, welcome from the welcome controller! <br/>
 this content can be changed in <code>/app/Views/Welcome/Welcome.php</code>');
 
+        if (Auth::id())
+        {
+            $playlist = Playlist::whereRaw('utilisateur_id=?', array(Auth::id()));
+            $playlist .= "<form><input type='text'></form>";
+        }
+        else
+        {
+            $playlist = false;
+        }
+
         return View::make('Welcome/Welcome')
             ->shares('title', __('Welcome'))
-            ->with('welcomeMessage', $message);
+            ->with('welcomeMessage', $message)
+            ->with('playlist', $mesPlaylists);
     }
 
     /**

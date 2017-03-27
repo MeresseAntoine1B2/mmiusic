@@ -79,10 +79,7 @@ echo isset($css) ? $css : ''; // Place to pass data / plugable hook zone
 </footer>
 
 <?php
-Assets::js([
-    'https://code.jquery.com/jquery-1.12.4.min.js',
-    vendor_url('dist/js/bootstrap.min.js', 'twbs/bootstrap'),
-]);
+
 
 echo isset($js) ? $js : ''; // Place to pass data / plugable hook zone
 
