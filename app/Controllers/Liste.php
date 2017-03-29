@@ -15,7 +15,8 @@ use App\Models\Chanson;
 use App\Models\Playlist;
 use Nova\Support\Facades\Auth;
 use Nova\Support\Facades\Redirect;
-use Symfony\Component\Console\Input\Input;
+//use Symfony\Component\Console\Input\Input;
+use Nova\Support\Facades\Input;
 use View;
 
 
@@ -26,13 +27,19 @@ class Liste extends Controller
 {
     public function maliste()
     {
+        $chansonsPlayer = "";
         $chansons = Chanson::all();
+        foreach ($chansons as $c)
+        {
+            $chansonsPlayer.="<audio controls='controls'><source src='".$c->fichier."'></audio><br />";
+        }
 
-        $message = __("$chansons");
+        $message = __("$chansonsPlayer");
 
-        return View::make('Welcome/Welcome')
-            ->shares('title', __('Welcome'))
-            ->with('welcomeMessage', $message);
+        return View::make('Liste/Welcome')
+            ->shares('title', __('Liste'))
+            ->with('welcomeMessage', $message)
+            ->with('mesPlaylists', "Playlist");
     }
 
     public function formulaire()
