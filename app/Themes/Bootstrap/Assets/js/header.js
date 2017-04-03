@@ -1,4 +1,7 @@
-/**
- * Created by antoine on 03/04/17.
- */
-alert("HEADER");
+$(document).ready(function() {
+
+    var hauteur_fenetre = $(window).height();
+    $("#header_home").css('height', hauteur_fenetre);
+
+
+});

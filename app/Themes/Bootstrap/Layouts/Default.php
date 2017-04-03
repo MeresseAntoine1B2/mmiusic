@@ -53,7 +53,7 @@ echo isset($css) ? $css : ''; // Place to pass data / plugable hook zone
 
 <?= isset($afterBody) ? $afterBody : ''; // Place to pass data / plugable hook zone ?>
 
-<header>
+<header id="header_home">
 
     <p>
         <img src='<?= theme_url('images/logo_white.png', 'Bootstrap'); ?>' alt='<?= Config::get('app.name', SITETITLE); ?>'><br />
@@ -89,6 +89,8 @@ echo isset($js) ? $js : ''; // Place to pass data / plugable hook zone
 
 echo isset($footer) ? $footer : ''; // Place to pass data / plugable hook zone
 ?>
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script src='<?= theme_url('js/header.js', 'Bootstrap'); ?>'></script>
 
 <!-- DO NOT DELETE! - Forensics Profiler -->
 
