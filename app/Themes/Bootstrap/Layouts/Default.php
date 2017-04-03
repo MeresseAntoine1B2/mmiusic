@@ -39,7 +39,7 @@ Assets::css([
 echo isset($css) ? $css : ''; // Place to pass data / plugable hook zone
 ?>
 </head>
-<body style='padding-top: 28px;'>
+<body>
 
 <nav class="navbar navbar-default navbar-xs navbar-fixed-top" role="navigation">
     <div class="container-fluid">
@@ -53,11 +53,15 @@ echo isset($css) ? $css : ''; // Place to pass data / plugable hook zone
 
 <?= isset($afterBody) ? $afterBody : ''; // Place to pass data / plugable hook zone ?>
 
-<div class="container">
-    <p>
-        <img src='<?= theme_url('images/nova.png', 'Bootstrap'); ?>' alt='<?= Config::get('app.name', SITETITLE); ?>'>
-    </p>
+<header>
 
+    <p>
+        <img src='<?= theme_url('images/logo_white.png', 'Bootstrap'); ?>' alt='<?= Config::get('app.name', SITETITLE); ?>'><br />
+        Vos musiques, vos univers
+    </p>
+</header>
+
+<div class="container">
     <?= $content; ?>
 </div>
 
