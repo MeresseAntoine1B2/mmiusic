@@ -32,14 +32,22 @@ class Liste extends Controller
         $chansons = Chanson::all();
         foreach ($chansons as $c)
         {
-            $chansonsPlayer.="<audio controls='controls'><source src='".$c->fichier."'></audio><a href='playlist/ajout?id_chanson=".$c->id."'>Ajouter à</a><br />";
+            $chansonsPlayer.=$c->nom."<audio controls='controls'><source src='".$c->fichier."'></audio><a href='playlist/ajout?id_chanson=".$c->id."'>Ajouter à</a><br />";
         }
 
         $playlists = Playlist::all();
         $playlist_txt = "";
         foreach ($playlists as $p)
         {
-            $playlist_txt.="$p->nom<br />";
+            $ids_chansons = "";
+            $playlist_txt.="$p->nom<ul>";
+            $data = DB::select("SELECT * FROM `nova_contient` INNER JOIN nova_chanson ON nova_contient.chanson_id=nova_chanson.id WHERE playlist_id =".$p->id);
+            foreach ($data as $item)
+            {
+                $playlist_txt.="<li>".$item->nom."<audio controls='controls'><source src='".$item->fichier."'></audio></li>";
+            }
+            $playlist_txt.="</ul>";
+
         }
 
         $message = __("$chansonsPlayer");
