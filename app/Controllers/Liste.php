@@ -11,6 +11,7 @@ namespace App\Controllers;
 use App\Core\Controller;
 
 use App\Models\Chanson;
+use DB;
 
 use App\Models\Playlist;
 use Nova\Support\Facades\Auth;
@@ -31,7 +32,14 @@ class Liste extends Controller
         $chansons = Chanson::all();
         foreach ($chansons as $c)
         {
-            $chansonsPlayer.="<audio controls='controls'><source src='".$c->fichier."'></audio><br />";
+            $chansonsPlayer.="<audio controls='controls'><source src='".$c->fichier."'></audio><a href='playlist/ajout?id_chanson=".$c->id."'>Ajouter à</a><br />";
+        }
+
+        $playlists = Playlist::all();
+        $playlist_txt = "";
+        foreach ($playlists as $p)
+        {
+            $playlist_txt.="$p->nom<br />";
         }
 
         $message = __("$chansonsPlayer");
@@ -39,7 +47,7 @@ class Liste extends Controller
         return View::make('Liste/Welcome')
             ->shares('title', __('Liste'))
             ->with('welcomeMessage', $message)
-            ->with('mesPlaylists', "Playlist");
+            ->with('mesPlaylists', $playlist_txt);
     }
 
     public function formulaire()
@@ -59,6 +67,21 @@ class Liste extends Controller
             </form>      
         
         ");
+
+        return View::make('Welcome/Welcome')
+            ->shares('title', __('Welcome'))
+            ->with('welcomeMessage', $message);
+    }
+
+    public function formulaireplaylist()
+    {
+        $message = __("
+            <form method='post' action='/playlist/cree'>
+                <label for='playlist'>Nom</label>
+                <input type='text' name='playlist' placeholder='le nom de la playlist'><br />
+                <input type='submit'>
+            </form>  
+            ");
 
         return View::make('Welcome/Welcome')
             ->shares('title', __('Welcome'))
@@ -105,4 +128,47 @@ class Liste extends Controller
 
     }
 
+    public function ajouteplaylist()
+    {
+        if(Auth::id() == false)
+            return Redirect::to('/login');
+        if(!isset($_GET["id_chanson"]))
+            return Redirect::to('/');
+        $playlists = Playlist::all();
+        $playlist_txt = "";
+        foreach ($playlists as $p)
+        {
+            if($p->utilisateur_id == Auth::id())
+            {
+                $playlist_txt.="<a href='/playlist/ajoute?id_playlist=".$p->id."&id_chanson=".$_GET["id_chanson"]."'>$p->nom</a><br />";
+            }
+        }
+
+        $message = __("");
+
+        return View::make('Liste/Welcome')
+            ->shares('title', __('Liste'))
+            ->with('welcomeMessage', $message)
+            ->with('mesPlaylists', $playlist_txt);
+    }
+
+    public function addplaylist()
+    {
+        if(Auth::id() == false)
+            return Redirect::to('/login');
+        if(!isset($_GET["id_chanson"]))
+            return Redirect::to('/');
+        if(!isset($_GET["id_playlist"]))
+            return Redirect::to('/');
+
+        /*$p = new Playlist();
+        $p-> playlist_id = $_GET["id_playlist"];
+        $p-> chanson_id = $_GET["id_chanson"];
+        $p->save();*/
+
+        DB::table('contient')->insert(
+            array('playlist_id' => $_GET["id_playlist"], 'chanson_id' => $_GET["id_chanson"])
+        );
+        return Redirect::to('/');
+    }
 }

@@ -17,6 +17,9 @@ Route::get('/subpage', 'Welcome@subPage');
 Route::get("/chanson/nouvelle", 'Liste@formulaire');
 Route::post("/chanson/cree", 'Liste@cree');
 
-Route::post("/playlist/cree", 'liste@creerplaylist');
+Route::get("/playlist/nouvelle", 'Liste@formulaireplaylist');
+Route::post("/playlist/cree", 'Liste@creerplaylist');
+Route::get("/playlist/ajout", 'Liste@ajouteplaylist');
+Route::get("/playlist/ajoute", 'Liste@addplaylist');
 
 /** End default Routes */

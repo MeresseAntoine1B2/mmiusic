@@ -1,6 +1,12 @@
+<nav>
+    <a href="/chanson/nouvelle">Ajouter une chanson</a>
+    <a href="/playlist/nouvelle">Créer une playlist</a>
+</nav>
+
 <div class="page-header">
     <h1>{{ $title }}</h1>
 </div>
+
 
 
 <p>{{ $welcomeMessage }}</p>
@@ -9,9 +15,7 @@
 
 ?>
 
-<a class="btn btn-md btn-success" href="{{ site_url('subpage') }}">
-    {{ __('Open subpage') }}
-</a>
+
 
 <div class="playlist">
     <h2>Mes playlists</h2>
